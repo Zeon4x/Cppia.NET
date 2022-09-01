@@ -1,0 +1,53 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/Cppia.NET.Console/Cppia.NET.Console.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "dependsOn":["build_haxe"],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build_haxe",
+            "command":"haxe",
+            "type": "process",
+            "args": [
+                "build.hxml"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/Cppia.NET.Console/TestProject/"
+            },
+        },
+        {
+            "label": "publish",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/Cppia.NET.Console/Cppia.NET.Console.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "watch",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "--project",
+                "${workspaceFolder}/Cppia.NET.Console/Cppia.NET.Console.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}

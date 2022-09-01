@@ -1,0 +1,8 @@
+-p src/
+ClassTests
+ObjectsTests
+ExpressionsTests
+ControlTransferTests
+NativeCallTests
+NativeSuperCallTests 
+--cppia bin/HaxeProject.cppia
