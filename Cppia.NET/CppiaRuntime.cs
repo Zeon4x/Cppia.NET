@@ -7,7 +7,7 @@ public class CppiaRuntime
 {
     public List<CppiaInstruction> MainMethods { get; } = new();
     
-    private readonly Dictionary<string, IClass> _classses = new();
+    private readonly Dictionary<string, IClass> _classes = new();
     private readonly Dictionary<string, CppiaEnum> _enums = new();
     private readonly Dictionary<string, Delegate> _globals = new();
 
@@ -22,8 +22,8 @@ public class CppiaRuntime
 
     public IClass? GetClass(string fullName)
     {
-        if(_classses.ContainsKey(fullName))
-            return _classses[fullName];
+        if(_classes.ContainsKey(fullName))
+            return _classes[fullName];
         return null;
     }
 
@@ -45,12 +45,12 @@ public class CppiaRuntime
     {
         var file = new CppiaFile(stream);
         var classes = file.CppiaTypes.OfType<CppiaClass>()
-            .Where(c => !_classses.ContainsKey(c.Name))
+            .Where(c => !_classes.ContainsKey(c.Name))
             .Select(c => new InterpretedClass(c, this))
             .ToArray();
 
         // Add types
-        foreach (var @class in classes) _classses.Add(@class.Name, @class);
+        foreach (var @class in classes) _classes.Add(@class.Name, @class);
         foreach (var @enum in file.CppiaTypes.OfType<CppiaEnum>())
             _enums.Add(@enum.Name, @enum);
         
@@ -60,12 +60,31 @@ public class CppiaRuntime
         return file.Main;
     }
 
+    public void HotReload(string fileName) => File.OpenRead(fileName);
+    public void HotReload(byte[] bytes) => new MemoryStream(bytes);
+    public void HotReload(Stream stream)
+    {
+        var file = new CppiaFile(stream);
+        foreach (var type in file.CppiaTypes)
+        {
+            if(type is CppiaClass @class 
+                && GetClass(@class.Name) is InterpretedClass interpretedClass)
+            {
+                foreach (CppiaMethod method in @class.GetMethods())
+                {
+                    if( _classes[@class.Name].GetMethod(method.Name) is InterpretedMethod interpretedMethod)
+                        interpretedMethod.ReplaceCppiaMethod(method);
+                }
+            }
+        }
+    }
+
     public void RegisterType(Type type, string? customName = null)
     {
         if(customName is null)
             customName = type.Name;
 
-        _classses.Add(customName, new NativeClass(type, customName));
+        _classes.Add(customName, new NativeClass(type, customName));
     }
 
     public void RegisterGlobal(string name, Delegate @delegate)

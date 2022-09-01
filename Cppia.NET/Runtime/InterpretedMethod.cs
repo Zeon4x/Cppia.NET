@@ -26,4 +26,7 @@ public class InterpretedMethod : IMethod
 
         return _runtime.Execute(function, instance, parameters);
     }
+
+    internal void ReplaceCppiaMethod(CppiaMethod method)
+        => _method = method;
 }
