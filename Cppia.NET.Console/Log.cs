@@ -1,8 +1,7 @@
-using System.Reflection;
 using Cppia.Instructions;
 using Cppia.Runtime;
 
-namespace Cppia.NET;
+namespace Cppia;
 
 public class Log
 {

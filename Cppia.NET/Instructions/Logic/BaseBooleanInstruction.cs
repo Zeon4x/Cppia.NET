@@ -1,7 +1,7 @@
 using Cppia.Instructions;
 using Cppia.Runtime;
 
-namespace Cppia.NET.Cppia.Instructions.Logic;
+namespace Cppia.Instructions;
 
 public class BaseBooleanInstruction : BinOperationInstruction
 {

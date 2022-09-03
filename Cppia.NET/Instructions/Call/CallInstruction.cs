@@ -16,11 +16,12 @@ public class CallInstruction : BaseCallInstruction
 
     public override object? Execute(Context context)
     {
+        object? instance = (Function as BaseFieldInstruction)?.Object;
         var value = Function.Execute(context);
         if (value is IMethod method)
         {
             var args = GetArguments(context);
-            return method.Invoke(null, args);
+            return method.Invoke(instance, args);
         }
         throw new NotImplementedException();
     }

@@ -6,7 +6,7 @@ namespace Cppia.Instructions;
 public class GetStaticFieldInstruction : BaseFieldInstruction, IAssignable
 {
     public GetStaticFieldInstruction(CppiaFile file, CppiaReader reader)
-        : base(file, reader) { }
+        : base(file, reader, false) { }
 
     public override object? Execute(Context context)
     {
@@ -15,6 +15,8 @@ public class GetStaticFieldInstruction : BaseFieldInstruction, IAssignable
 
         if (@class.GetVarible(Field) is IVarible varible)
             return varible.GetValue(null);
+        if(@class.GetMethod(Field) is IMethod method)
+            return method;
         throw new Exception($"Field {Field} not found in class {Class}");
     }
 

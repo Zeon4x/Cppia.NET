@@ -8,11 +8,14 @@ public abstract class BaseFieldInstruction : CppiaInstruction, IAssignable
 {
     public string Class { get; }
     public string Field { get; }
+    public CppiaInstruction? Object { get; }
 
-    public BaseFieldInstruction(CppiaFile file, CppiaReader reader)
+    public BaseFieldInstruction(CppiaFile file, CppiaReader reader, bool hasObject)
     {
         Class = file.Types[reader.ReadInt()];
         Field = file.Strings[reader.ReadInt()];
+        if(hasObject)
+            Object = ReadInstruction(file, reader);
     }
 
     public void Assign(Context context, Func<object?, object?> assignFunction, object? @obj)
@@ -22,6 +25,8 @@ public abstract class BaseFieldInstruction : CppiaInstruction, IAssignable
 
         if (@class.GetVarible(Field) is IVarible varible)
             varible.SetValue(@obj, assignFunction(varible.GetValue(@obj)));
+        if(@class.GetMethod(Field) is not null && assignFunction(null) is IMethod function)
+            @class.SetDynamicMethod(Field, function);
         else
             throw new Exception($"Type {@class} has no declared field " + Field);
     }

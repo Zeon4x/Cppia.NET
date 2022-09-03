@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using Cppia;
-using Cppia.NET;
 using Cppia.Runtime;
 
 var runtime = new CppiaRuntime();

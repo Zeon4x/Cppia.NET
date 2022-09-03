@@ -5,10 +5,10 @@ public class InterpretedClass : IClass
     public string Name => _class.Name;
 
     public IClass? BaseClass { get; private set; }
-    public InterpretedMethod? Constructor { get; }
+    public IMethod? Constructor { get; }
 
     private readonly Dictionary<string, InterpretedVarible> _varibles;
-    private readonly Dictionary<string, InterpretedMethod> _methods;
+    private readonly Dictionary<string, IMethod> _methods;
     private readonly CppiaClass _class;
     private readonly CppiaRuntime _runtime;
 
@@ -22,6 +22,7 @@ public class InterpretedClass : IClass
             .ToDictionary(v => v.Name);
         _methods = _class.GetMethods()
             .Select(m => new InterpretedMethod(m, runtime))
+            .OfType<IMethod>()
             .ToDictionary(m => m.Name);
         
         if(_methods.ContainsKey("new"))
@@ -75,5 +76,10 @@ public class InterpretedClass : IClass
         if(BaseClass is not null)
             return BaseClass.GetMethod(name);
         return null;
+    }
+
+    public void SetDynamicMethod(string name, IMethod function)
+    {
+        _methods[name] = function;
     }
 }

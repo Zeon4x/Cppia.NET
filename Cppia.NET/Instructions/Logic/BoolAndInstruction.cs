@@ -1,5 +1,3 @@
-using Cppia.NET.Cppia.Instructions.Logic;
-
 namespace Cppia.Instructions;
 
 public class BoolAndInstruction : BaseBooleanInstruction

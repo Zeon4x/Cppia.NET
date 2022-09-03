@@ -1,7 +1,7 @@
 using Cppia.Instructions;
 using Cppia.Runtime;
 
-namespace Cppia.NET.Runtime;
+namespace Cppia.Runtime;
 
 public class CppiaFunction : IMethod
 {

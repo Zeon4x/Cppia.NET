@@ -6,14 +6,9 @@ namespace Cppia.Instructions;
 
 public class GetFieldByLinkInstruction : BaseFieldInstruction, IAssignable
 {
-    public CppiaInstruction? Object { get; }
 
     public GetFieldByLinkInstruction(CppiaFile file, CppiaReader reader, bool thisObject)
-        :base(file, reader)
-    {
-        if (!thisObject)
-            Object = ReadInstruction(file, reader);
-    }
+        :base(file, reader, !thisObject) {}
 
     public override object? Execute(Context context)
     {
@@ -29,6 +24,8 @@ public class GetFieldByLinkInstruction : BaseFieldInstruction, IAssignable
         
         if (@class.GetVarible(Field) is IVarible property)
             return property.GetValue(obj);
+        if (@class.GetMethod(Field) is IMethod method)
+            return method;
 
         throw new Exception($"Field {Field} not found in class "+Class);
     }

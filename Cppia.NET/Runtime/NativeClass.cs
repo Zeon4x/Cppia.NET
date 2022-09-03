@@ -8,7 +8,7 @@ public class NativeClass : IClass
     public IClass? BaseClass => null;
 
     private readonly Type _type;
-    private readonly Dictionary<string, NativeMethod> _methods;
+    private readonly Dictionary<string, IMethod> _methods;
     private readonly Dictionary<string, NativeVaribleField> _fields;
     private readonly Dictionary<string, NativeVaribleProperty> _properties;
     private const BindingFlags Flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.IgnoreCase;
@@ -21,6 +21,7 @@ public class NativeClass : IClass
         _methods = type.GetMethods()
             .Select(m => new NativeMethod(m))
             .Where(m => m.Name != "GetType")
+            .OfType<IMethod>()
             .ToDictionary(m => m.Name, StringComparer.OrdinalIgnoreCase);
         _fields = type.GetFields()
             .Select(f => new NativeVaribleField(f))
@@ -61,5 +62,10 @@ public class NativeClass : IClass
         else if(_properties.ContainsKey(name))
             return _properties[name];
         return null;
+    }
+
+    public void SetDynamicMethod(string name, IMethod function)
+    {
+        _methods[name] = function;
     }
 }
