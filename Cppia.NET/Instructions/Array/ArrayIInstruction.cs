@@ -16,7 +16,7 @@ public class ArrayIInstruction : CppiaInstruction, IAssignable
         InputInstruction = ReadInstruction(file, reader);
     }
 
-    private (IList, int) Unwrap(Context context) 
+    private (IList, int) GetElementReference(Context context) 
     {
         if(ThisInstruction.Execute(context) is not IList list)
             throw new NullReferenceException("Array object cannot be null");
@@ -27,13 +27,13 @@ public class ArrayIInstruction : CppiaInstruction, IAssignable
 
     public override object? Execute(Context context)
     {
-        var (list, index) = Unwrap(context);
+        var (list, index) = GetElementReference(context);
         return list[index];
     }
 
     public void Assign(Context context, Func<object?, object?> assignFunction)
     {
-        var (list, index) = Unwrap(context);
+        var (list, index) = GetElementReference(context);
         list[index] = assignFunction(list[index]);
     }
 }

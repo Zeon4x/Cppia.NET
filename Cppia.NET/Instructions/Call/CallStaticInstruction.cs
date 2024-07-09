@@ -17,11 +17,11 @@ public class CallStaticInstruction : BaseCallInstruction
 
     public override object? Execute(Context context)
     {
-        var args = GetArguments(context);
+        object?[] args = GetArguments(context);
         if(context.Runtime.GetClass(Class) is not IClass @class)
             throw new NullReferenceException("Type not found: "+Class);
         if(@class.GetMethod(Field) is IMethod method)
-            return method.Invoke(null, args.ToArray());
+            return method.Invoke(null, args);
         throw new Exception($"Static method {Field} not found in {Class}");
     }
 }

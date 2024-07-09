@@ -1,23 +1,26 @@
+using System.Collections;
+using System.Reflection;
 using Cppia.Instructions;
 using Cppia.Runtime;
+using Cppia.Std;
+using Cppia.Std.Exceptions;
 
 namespace Cppia;
 
 public class CppiaRuntime
 {
-    public List<CppiaInstruction> MainMethods { get; } = new();
-    
     private readonly Dictionary<string, IClass> _classes = new();
     private readonly Dictionary<string, CppiaEnum> _enums = new();
     private readonly Dictionary<string, Delegate> _globals = new();
 
     public CppiaRuntime()
     {
-        RegisterType(typeof(EnumValue), "::hx::EnumBase");
-        RegisterType(typeof(CppiaException), "haxe.Exception");
-        RegisterType(typeof(ValueException), "haxe.ValueException");
-        RegisterType(typeof(Std.CppiaStd), "Std");
-        RegisterType(typeof(Std.Date), "Date");
+        RegisterType<EnumValue>("::hx::EnumBase");
+        RegisterType<CppiaException>("haxe.Exception");
+        RegisterType<ValueException>("haxe.ValueException");
+
+        RegisterType<List<int>>("Array.int");
+        RegisterExtensionMethods<CppiaArray>("Array.int");
     }
 
     public IClass? GetClass(string fullName)
@@ -87,10 +90,25 @@ public class CppiaRuntime
         _classes.Add(customName, new NativeClass(type, customName));
     }
 
+    public void RegisterType<T>(string? customName = null) => RegisterType(typeof(T), customName);
+
     public void RegisterGlobal(string name, Delegate @delegate)
     {
         _globals.Add(name, @delegate);
     }
+
+    public void RegisterExtensionMethods(string className, Type type)
+    {
+        if(_classes.TryGetValue(className, out IClass @class) && @class is NativeClass nativeClass)
+        {
+            foreach (var method in type.GetMethods(BindingFlags.Public | BindingFlags.Static))
+            {
+                nativeClass.AssignDynamicMethod(method.Name, new ExtensionMethod(method));
+            }
+        }
+    }
+
+    public void RegisterExtensionMethods<T>(string className) => RegisterExtensionMethods(className, typeof(T));
 
     internal object? Execute(FunctionInstruction function, object? thisObj, object?[] args)
     {

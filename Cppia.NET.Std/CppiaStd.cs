@@ -8,15 +8,18 @@ public class CppiaStd
 		if(value is CppiaInstance instance)
             return instance.Class.IsOfType(@class);
         if(@class is NativeClass nativeClass)
-            return nativeClass.IsOfType(value.GetType());
+            return nativeClass.AssignableTo(value.GetType());
         return false;
     }
 
-    public static string String(object? value)
+    public static object? Downcast(object value, IClass @class)
     {
-        return value is null ? "null" : value?.ToString()!;
+        if(IsOfType(value, @class))
+            return value;
+        return null;
     }
 
+    public static string String(object? value) => value?.ToString() ?? "null";
     public static int Int(double value) => Convert.ToInt32(value);
     public static int ParseInt(string value) => int.Parse(value);
     public static float ParseFloat(string value) => float.Parse(value);

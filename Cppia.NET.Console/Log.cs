@@ -5,10 +5,16 @@ namespace Cppia;
 
 public class Log
 {
-    public static NativeMethod? Trace { get; set; } = new NativeMethod(typeof(Log).GetMethod(nameof(DefaultTrace))!);
+    public static Action<object, PosInfoInstruction> Trace { get; set; } = DefaultTrace;
 
-    public static void DefaultTrace(object message, PosInfoInstruction posInfoInstruction)
+    public static void DefaultTrace(object message, PosInfoInstruction posInfo)
     {
-        Console.WriteLine(posInfoInstruction.File + ":" + posInfoInstruction.Line + ": " + message);
+        if(message is CppiaInstance instance)
+        {
+            IMethod? method = instance.Class?.GetMethod("toString");
+            Console.WriteLine($"{posInfo.File}:{posInfo.Line}: {method?.Invoke(instance)}");
+        }
+        else
+            Console.WriteLine($"{posInfo.File}:{posInfo.Line}: {message}");
     }
 }

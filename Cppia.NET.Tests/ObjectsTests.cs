@@ -22,7 +22,7 @@ public class ObjectsTests
     public void Create_Array()
     {
         var result = _class.GetMethod("createArray").Invoke(null);
-        Assert.IsInstanceOfType(result, typeof(object[]));
+        Assert.IsInstanceOfType(result, typeof(IList));
     }
 
     [TestMethod]

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cppia.NET.Console", "Cppia.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cppia.NET.Tests", "Cppia.NET.Tests\Cppia.NET.Tests.csproj", "{E9B7D40A-A56B-4469-85B5-442694E0D00A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cppia.NET.Std", "Cppia.NET.Std\Cppia.NET.Std.csproj", "{C101E7BE-D8CB-4529-BC84-21189045AC2D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{E9B7D40A-A56B-4469-85B5-442694E0D00A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9B7D40A-A56B-4469-85B5-442694E0D00A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9B7D40A-A56B-4469-85B5-442694E0D00A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C101E7BE-D8CB-4529-BC84-21189045AC2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C101E7BE-D8CB-4529-BC84-21189045AC2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C101E7BE-D8CB-4529-BC84-21189045AC2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C101E7BE-D8CB-4529-BC84-21189045AC2D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

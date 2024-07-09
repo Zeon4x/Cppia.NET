@@ -6,7 +6,5 @@ public class SetInstruction : BaseAssignInstruction
         : base(file, reader){}
 
     protected override object? Assign(object? currentValue, object? value)
-    {
-        return value;
-    }
+        => value;
 }

@@ -16,12 +16,17 @@ public class CallInstruction : BaseCallInstruction
 
     public override object? Execute(Context context)
     {
-        object? instance = (Function as BaseFieldInstruction)?.Object;
+        object? obj = (Function as BaseFieldInstruction)?.Object;
         var value = Function.Execute(context);
+        var args = GetArguments(context);
+        object?[] parameters = GetArguments(context);
         if (value is IMethod method)
         {
-            var args = GetArguments(context);
-            return method.Invoke(instance, args);
+            return method.Invoke(obj, args);
+        }
+        else if (value is Delegate function)
+        {
+            return function.DynamicInvoke(args);
         }
         throw new NotImplementedException();
     }

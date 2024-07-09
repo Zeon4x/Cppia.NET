@@ -25,10 +25,8 @@ public class CallMemberInstruction : BaseCallInstruction
         if (@class.GetMethod(FieldName) is not IMethod method)
             throw new Exception($"Method {FieldName} not found in class {ClassName} .");
             
-        object?[] parameters = GetArguments(context);
         object? obj = ThisInstruction.Execute(context);
-        return method.Invoke(obj, parameters);
-        
+        return method.Invoke(obj, GetArguments(context));
     }
 
 

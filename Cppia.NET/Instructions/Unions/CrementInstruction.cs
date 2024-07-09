@@ -14,14 +14,17 @@ public abstract class CrementInstruction : CppiaInstruction
 
     public override object? Execute(Context context)
     {
-        if (Value is VaribleInstruction instruction)
-        {
-            double value = Convert.ToDouble(Value.Execute(context));
-            var result = Execute(ref value);
-            context.Varibles[instruction.VaribleId] = value;
-            return result;
-        }
-        throw new NotImplementedException();
+        double value = Convert.ToDouble(Value.Execute(context));
+        var result = Execute(ref value);
+
+        if (Value is VaribleInstruction varInstruction)
+            context.Varibles[varInstruction.VaribleId] = value;
+        else if(Value is BaseFieldInstruction instruction)
+            instruction.Assign(context, v => value);
+        else
+            throw new NotImplementedException();
+        return result;
+
     }
 
     protected abstract double Execute(ref double value);

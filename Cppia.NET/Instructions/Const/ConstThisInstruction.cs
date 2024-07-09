@@ -1,7 +1,8 @@
+using Cppia.Runtime;
+
 namespace Cppia.Instructions;
 
-public class ConstThisInstruction : BaseConstInstruction
+public class ConstThisInstruction : CppiaInstruction 
 {
-    public ConstThisInstruction(CppiaFile file, CppiaReader reader) 
-    : base(file, reader){}
+    public override object? Execute(Context context) => context.This;
 }

@@ -1,7 +1,8 @@
+using Cppia.Runtime;
+
 namespace Cppia.Instructions;
 
-public class ConstNullInstruction : BaseConstInstruction
+public class ConstNullInstruction : CppiaInstruction
 {
-    public ConstNullInstruction(CppiaFile file, CppiaReader reader) 
-    : base(file, reader){}
+    public override object? Execute(Context context) => null;
 }

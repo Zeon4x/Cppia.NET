@@ -25,10 +25,10 @@ public abstract class BaseFieldInstruction : CppiaInstruction, IAssignable
 
         if (@class.GetVarible(Field) is IVarible varible)
             varible.SetValue(@obj, assignFunction(varible.GetValue(@obj)));
-        if(@class.GetMethod(Field) is not null && assignFunction(null) is IMethod function)
-            @class.SetDynamicMethod(Field, function);
+        else if(@class.GetMethod(Field) is not null && assignFunction(null) is IMethod function)
+            @class.AssignDynamicMethod(Field, function);
         else
-            throw new Exception($"Type {@class} has no declared field " + Field);
+            throw new Exception($"Type {Class} has no declared field " + Field);
     }
 
     public abstract void Assign(Context context, Func<object?, object?> assignFunction);

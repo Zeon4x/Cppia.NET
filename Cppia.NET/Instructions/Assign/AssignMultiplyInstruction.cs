@@ -8,7 +8,5 @@ public class AssignMulInstruction : BaseAssignInstruction
         : base(file, reader) {}
 
     protected override double Assign(double currentValue, double value)
-    {
-        return currentValue * value;
-    }
+        => currentValue * value;
 }

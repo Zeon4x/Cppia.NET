@@ -1,4 +1,3 @@
 -p src/
 --main Main
 --cppia bin/test.cppia
-#--interp

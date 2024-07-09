@@ -92,9 +92,9 @@ public abstract class CppiaInstruction
             CppiaOpCode.IaConstTrue => new ConstBoolInstruction(file, reader, true),
             CppiaOpCode.IaConstFalse => new ConstBoolInstruction(file, reader, false),
             CppiaOpCode.IaConstString => new ConstStringInstruction(file, reader),
-            CppiaOpCode.IaConstNull => new ConstNullInstruction(file, reader),
-            CppiaOpCode.IaConstThis => new ConstThisInstruction(file, reader),
-            CppiaOpCode.IaConstSuper => new ConstSuperInstruction(file, reader),
+            CppiaOpCode.IaConstNull => new ConstNullInstruction(),
+            CppiaOpCode.IaConstThis => new ConstThisInstruction(),
+            CppiaOpCode.IaConstSuper => new ConstSuperInstruction(),
             
             // Boolean opeartions
             CppiaOpCode.IaLogicNot => new LogicNotInstruction(file, reader),

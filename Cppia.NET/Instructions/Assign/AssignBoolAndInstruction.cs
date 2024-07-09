@@ -8,7 +8,5 @@ public class AssignBoolAndInstruction : BaseAssignInstruction
         : base(file, reader) {}
 
     protected override object? Assign(object? currentValue, object? value)
-    {
-        return Convert.ToBoolean(currentValue) && Convert.ToBoolean(value);
-    }
+        => Convert.ToBoolean(currentValue) && Convert.ToBoolean(value);
 }

@@ -3,7 +3,7 @@ using Cppia;
 using Cppia.Runtime;
 
 namespace Cppia.Std;
-public class Type
+public class CppiaType
 {
     public static CppiaEnumConstructor[] AllEnums(CppiaEnum @enum)
     {

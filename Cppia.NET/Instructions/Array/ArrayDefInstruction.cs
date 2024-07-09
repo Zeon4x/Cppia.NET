@@ -13,9 +13,6 @@ public class ArrayDefInstruction : CppiaInstruction
         ReadInstructions(Elements, file, reader, reader.ReadInt());
     }
 
-    public override object? Execute(Context context)
-    {
-        return Elements.Select(i => i.Execute(context))
-            .ToArray();
-    }
+    public override object? Execute(Context context) 
+        => Elements.Select(i => i.Execute(context)).ToList();
 }

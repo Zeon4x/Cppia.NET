@@ -1,13 +1,12 @@
+using Cppia.Runtime;
+
 namespace Cppia.Instructions;
 
-public class ConstBoolInstruction : BaseConstInstruction
+public class ConstBoolInstruction : CppiaInstruction
 {
     private readonly bool _value;
     public ConstBoolInstruction(CppiaFile file, CppiaReader reader, bool value)
-        : base(file, reader) => _value = value;
+        => _value = value;
 
-    protected override object? ReadValue(CppiaFile file, CppiaReader reader)
-    {
-        return _value;
-    }
+    public override object? Execute(Context context) => _value;
 }

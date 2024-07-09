@@ -28,8 +28,6 @@ public class FunctionInstruction : CppiaInstruction
         return null;
     }
 
-    public override object? Execute(Context context)
-    {
-        return new CppiaFunction(this, context.Runtime);
-    }
+    public override object? Execute(Context context) 
+        => new CppiaFunction(this, context.Runtime);
 }

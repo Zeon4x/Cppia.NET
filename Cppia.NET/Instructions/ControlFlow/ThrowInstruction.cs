@@ -1,4 +1,5 @@
 using Cppia.Runtime;
+using Cppia.Std.Exceptions;
 
 namespace Cppia.Instructions;
 
