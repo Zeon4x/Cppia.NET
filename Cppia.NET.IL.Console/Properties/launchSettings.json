@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Cppia.NET.Console": {
+      "commandName": "Project",
+      "workingDirectory": "E:\\Programming\\.NET\\Cppia.NET.IL\\Cppia.NET.Console\\"
+    }
+  }
+}
